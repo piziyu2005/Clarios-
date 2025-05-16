@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中国汽车市场与12V蓄电池洞察 - 2025年至今</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+             --highlight-color: #FF8C2B; /* Clarios Brand Color */
+             --card-bg: #1a1a1a;
+             --text-color: #ffffff;
+             --secondary-text-color: #cccccc;
+             --border-color: #333;
+             --darker-card-bg: #222222;
+             --darker-border-color: #444;
+        }
+        body {
+            background-color: #000000;
+            color: var(--text-color);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            overflow-x: hidden; /* Prevent horizontal scroll caused by potential overflow */
+            padding-bottom: 50px; /* Add some padding at the bottom */
+        }
+
+        .container {
+             max-width: 1400px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .card.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .main-card {
+            border-radius: 1.5rem; /* rounded-2xl */
+            padding: 2rem; /* p-8 */
+            margin-bottom: 2rem; /* mb-8 */
+        }
+
+        .mini-card {
+            border-radius: 0.75rem; /* rounded-lg */
+            padding: 1.5rem; /* Adjusted padding for better look */
+            background-color: var(--darker-card-bg);
+            border: 1px solid var(--darker-border-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Distribute space */
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            opacity: 0; /* Initial state for animation */
+            transform: translateY(20px); /* Initial state for animation */
+            position: relative; /* IMPORTANT: Needed for absolute positioning of tooltip-text */
+             /* Added min height to help layout */
+            min-height: 180px; /* Adjust based on expected content variability */
+            cursor: pointer; /* Indicate clickable/hoverable */
+        }
+
+         .mini-card:hover {
+             transform: translateY(-5px); /* Subtle lift effect */
+             transition: transform 0.3s ease-in-out;
+         }
+
+        .mini-card.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+
+        .highlight-color {
+            color: var(--highlight-color);
+        }
+
+         .main-title-gradient {
+            background: linear-gradient(45deg, rgba(255, 140, 43, 1), rgba(255, 140, 43, 0.7));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+        }
+
+
+        /* Tooltip Styles - Based on your provided snippet */
+        .mini-card .tooltip-text { /* Target the tooltip text element inside the mini-card */
+            visibility: hidden;
+            width: max-content; /* Allow width to fit content */
+            max-width: 280px; /* Max width to prevent overly long lines */
+            background-color: #333; /* Dark background */
+            color: #fff; /* White text */
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px 12px;
+            position: absolute; /* Position absolutely relative to mini-card (which is relative) */
+            z-index: 100; /* Ensure it's above card content */
+            bottom: calc(100% + 10px); /* Position 10px above the top edge of the mini-card */
+            left: 50%; /* Center horizontally relative to mini-card */
+            transform: translateX(-50%); /* Adjust left positioning to truly center */
+            opacity: 0;
+            transition: opacity 0.3s, visibility 0.3s;
+            font-size: 0.875rem; /* text-sm */
+            line-height: 1.25rem; /* Improved readability */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            pointer-events: none; /* Ensure clicks/hovers go through to the card below */
+            white-space: normal; /* Allow text wrap */
+            text-align: left; /* Align text left inside the tooltip */
+        }
+
+        /* Arrow for the tooltip */
+        .mini-card .tooltip-text::after {
+            content: "";
+            position: absolute;
+            top: 100%; /* Position arrow at the bottom of the tooltip text box */
+            left: 50%;
+            margin-left: -5px; /* Shift left by half the arrow width */
+            border-width: 5px;
+            border-style: solid;
+            border-color: #333 transparent transparent transparent; /* Create a down-pointing arrow matching background */
+        }
+
+        /* Show tooltip on hover of the mini-card */
+        .mini-card:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+
+        /* Style for the big number/title within mini-cards */
+        .mini-card .big-element {
+             font-size: 2.5rem; /* text-4xl as requested */
+             font-weight: bold;
+             margin-bottom: 0.5rem; /* mb-2 */
+             line-height: 1.2;
+             color: var(--highlight-color); /* Use highlight color */
+             word-break: break-word; /* Ensure long text breaks */
+        }
+
+        .mini-card a .big-element {
+             color: var(--highlight-color); /* Ensure linked title is highlighted */
+             transition: color 0.2s ease-in-out;
+        }
+         .mini-card a:hover .big-element {
+             color: #ffffff; /* Change color on hover for linked titles */
+         }
+
+
+        /* Style for the supporting text within mini-cards */
+        .mini-card .supporting-text {
+             font-size: 0.875rem; /* text-sm */
+             color: var(--secondary-text-color);
+             line-height: 1.4;
+             flex-grow: 1; /* Allow text to take up space */
+             margin-top: 0.5rem; /* Space after big element */
+        }
+
+         /* Style for small English subtitles */
+        .mini-card .english-subtitle {
+            font-size: 0.75rem; /* text-xs */
+            color: #888888;
+            margin-top: 0.5rem;
+        }
+
+         canvas {
+            background-color: #2a2a2a;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+         .chart-container {
+             position: relative;
+             height: 400px; /* Fixed height for charts */
+             width: 100%;
+         }
+
+         /* Style for links within cards to ensure visibility */
+         .mini-card a {
+             text-decoration: none; /* Remove underline */
+             color: inherit; /* Inherit color from parent */
+         }
+
+
+    </style>
+</head>
+<body class="antialiased">
+    <div class="container mx-auto px-4 py-8 max-w-screen-xl">
+
+        <header class="text-center mb-12 card animate-on-scroll p-6">
+            <h1 class="text-5xl lg:text-6xl font-bold mb-2 main-title-gradient">
+                <i class="fas fa-car mr-3 highlight-color"></i> 中国汽车与12V蓄电池市场洞察
+            </h1>
+            <h2 class="text-xl lg:text-2xl font-semibold text-gray-400 mb-4">
+                China Auto & 12V Battery Market Insights (2025-Present)
+            </h2>
+            <p class="text-gray-300 max-w-3xl mx-auto">
+                聚焦2025年至今中国乘用车市场及12V汽车蓄电池领域的最新动态、技术趋势与未来展望。
+            </p>
+        </header>
+
+        <section id="section-summary" class="main-card card animate-on-scroll">
+            <h3 class="text-3xl font-bold mb-6 border-b border-gray-700 pb-3">
+                <i class="fas fa-bullseye mr-3 highlight-color"></i> 关键发现摘要 - Key Insights
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+
+                <div class="mini-card animate-on-scroll" data-detail="2025年3月中国新能源汽车产销均超54万辆，同比增长85%以上。这是近期主要厂商新闻中突出的市场增长数据。">
+                     <a href="#section-manufacturers" class="block">
+                        <h4 class="big-element">+85%</h4>
+                    </a>
+                    <p class="supporting-text">3月新能源汽车产销同比高增长。</p>
+                    <p class="english-subtitle">NEV Growth (Mar)</p>
+                     <span class="tooltip-text"></span> </div>
+
+                <div class="mini-card animate-on-scroll" data-detail="据MarkLines数据，2025年Q1中国新能源汽车渗透率41.2%，显示新能源车市场份额持续扩大。">
+                    <a href="#section-market" class="block">
+                       <h4 class="big-element">41.2%</h4>
+                    </a>
+                    <p class="supporting-text">Q1中国新能源汽车市场渗透率。</p>
+                    <p class="english-subtitle">NEV Penetration (Q1)</p>
+                     <span class="tooltip-text"></span> </div>
+
+                 <div class="mini-card animate-on-scroll" data-detail="2024年中国12V电池市场规模达285.92亿元，显示该细分市场的巨大体量和潜力。">
+                     <a href="#section-12v-market" class="block">
+                       <h4 class="big-element">285.92亿</h4>
+                    </a>
+                    <p class="supporting-text">2024年中国12V电池市场规模。</p>
+                    <p class="english-subtitle">China 12V Market (2024)</p>
+                     <span class="tooltip-text"></span> </div>
+
+                 <div class="mini-card animate-on-scroll" data-detail="2024年锂电12V售后市场渗透率达12%，虽然基数小但增长迅速，反映了终端用户对新技术的接受度。">
+                     <a href="#section-demand" class="block">
+                       <h4 class="big-element">12%</h4>
+                    </a>
+                    <p class="supporting-text">2024年锂电12V售后市场渗透率。</p>
+                    <p class="english-subtitle">Li-ion 12V Aftermarket</p>
+                     <span class="tooltip-text"></span> </div>
+
+                 <div class="mini-card animate-on-scroll" data-detail="中国发布《电动汽车用动力蓄电池安全要求》（GB38031-2025），将于2026年7月1日实施，这是影响电池行业的重要法规。">
+                     <a href="#section-policies" class="block">
+                       <h4 class="big-element">GB38031</h4>
+                    </a>
+                    <p class="supporting-text">电动汽车动力电池安全新国标发布。</p>
+                    <p class="english-subtitle">New Battery Safety Std</p>
+                     <span class="tooltip-text"></span> </div>
+
+                 <div class="mini-card animate-on-scroll" data-detail="未来6个月趋势判断：12V锂电池在高端车型渗透率预计突破20%，显示市场接受度和技术成熟度提升。">
+                     <a href="#section-future" class="block">
+                       <h4 class="big-element">预计 >20%</h4>
+                    </a>
+                    <p class="supporting-text">未来6个月锂电12V高端车型渗透率预测。</p>
+                    <p class="english-subtitle">Li-ion Penetration Forecast</p>
+                     <span class="tooltip-text"></span> </div>
+
+            </div>
+        </section>
+
+        <section id="section-manufacturers" class="main-card card animate-on-scroll">
+            <h3 class="text-3xl font-bold mb-6 border-b border-gray-700 pb-3">
+                <i class="fas fa-building mr-3 highlight-color"></i> 主要厂商近期新闻与行业热点 - Recent Manufacturer News
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <div class="mini-card animate-on-scroll" data-detail="比亚迪在2025年Q1推出搭载第二代刀片电池的汉L、唐L等车型，能量密度提升至190Wh/kg，支持超快充技术。秦PLUS DM-i搭载第五代DM技术，馈电油耗降至2.9L/100km，配备高速NOA智能驾驶系统。">
+                    <a href="https://www.dirmarketresearch.com/reports/12v-automotive-lithium-battery-1854717785901195264" target="_blank" class="block">
+                         <h4 class="big-element">比亚迪</h4>
+                    </a>
+                    <p class="supporting-text">新品发布：汉L/唐L (二代刀片, 190Wh/kg), 秦PLUS DM-i (五代DM, 2.9L油耗, NOA).</p>
+                     <p class="english-subtitle">BYD New Models & Tech</p>
+                     <span class="tooltip-text"></span> </div>
+
+                 <div class="mini-card animate-on-scroll" data-detail="比亚迪2025年Q1新能源车出口44.1万辆，同比增长43.9%。">
+                    <a href="https://www.dirmarketresearch.com/reports/12v-automotive-lithium-battery-1854717785901195264" target="_blank" class="block">
+                        <h4 class="big-element highlight-color">44.1万辆</h4>
+                    </a>
+                    <p class="supporting-text">2025年Q1新能源车出口量，同比<span class="highlight-color">+43.9%</span>。</p>
+                    <p class="english-subtitle">BYD Q1 NEV Exports</p>
+                     <span class="tooltip-text"></span> </div>
+
+                <div class="mini-card animate-on-scroll" data-detail="上汽集团2025年一季度营收1408.6亿元，同比降1.55%，净利润30.23亿元，增11.4%，毛利率8.13%。">
+                    <a href="https://finance.sina.com.cn/roll/2025-01-10/doc-ineenpiv5535806.shtml" target="_blank" class="block">
+                         <h4 class="big-element highlight-color">1408.6亿</h4>
+                    </a>
+                    <p class="supporting-text">上汽集团Q1营收，同比<span class="text-red-400">-1.55%</span>。净利30.23亿(<span class="highlight-color">+11.4%</span>)。</p>
+                    <p class="english-subtitle">SAIC Q1 Financials</p>
+                     <span class="tooltip-text"></span> </div>
+
+                <div class="mini-card animate-on-scroll" data-detail="上汽集团优化供应链管理，降低库存周转天数至25天，新能源品牌终端销量2024年达166万辆。">
+                     <a href="https://finance.sina.com.cn/roll/2025-01-10/doc-ineenpiv5535806.shtml" target="_blank" class="block">
+                         <h4 class="big-element highlight-color">库存25天</h4>
+                     </a>
+                     <p class="supporting-text">上汽供应链优化，库存周转天数。2024年新能源销量166万辆。</p>
+                    <p class="english-subtitle">SAIC Inventory & NEV</p>
+                     <span class="tooltip-text"></span> </div>
+
+                 <div class="mini-card animate-on-scroll" data-detail="蔚来2024年营收657.3亿元，同比增长18.2%，净亏损扩大至204.7亿元。2025年推乐道L90等新车，目标销量翻番至44万辆。">
+                     <a href="https://m.gelonghui.com/p/1736929" target="_blank" class="block">
+                        <h4 class="big-element highlight-color">蔚来44万辆</h4>
+                    </a>
+                    <p class="supporting-text">蔚来2025年销量目标 (翻番)。2024营收657.3亿(+18.2%), 亏损204.7亿。</p>
+                    <p class="english-subtitle">Nio 2025 Sales Target</p>
+                     <span class="tooltip-text"></span> </div>
+
+                 <div class="mini-card animate-on-scroll" data-detail="2025上海车展，蔚来展示智能电动汽车全链条12项全栈技术，强调智能汽车“三大件”技术升级。">
+                     <a href="https://www.sohu.com/a/889501772_121713417" target="_blank" class="block">
+                        <h4 class="big-element highlight-color">蔚来全栈</h4>
+                    </a>
+                    <p class="supporting-text">上海车展展示12项全栈技术，强调智能汽车“三大件”。</p>
+                    <p class="english-subtitle">Nio Full-Stack Tech</p>
+                     <span class="tooltip-text"></span> </div>
+
+                <div class="mini-card animate-on-scroll" data-detail="2025年3月中国新能源汽车产销均超54万辆，同比增长85%以上；插电混动产销约34万辆，同比增长约90%。">
+                    <a href="http://www.cada.cn/Trends/info_91_10244.html" target="_blank" class="block">
+                         <h4 class="big-element highlight-color">+85%</h4>
+                    </a>
+                    <p class="supporting-text">2025年3月新能源汽车产销同比高增长。</p>
+                    <p class="english-subtitle">Mar 2025 NEV Growth</p>
+                     <span class="tooltip-text"></span> </div>
+
+                <div class="mini-card animate-on-scroll" data-detail="2025年1-3月乘用车产销分别完成651.3万辆和641.9万辆，同比增长16.1%和12.9%。">
+                     <a href="http://www.caam.org.cn/chn/5/cate_39/con_5236697.html" target="_blank" class="block">
+                        <h4 class="big-element highlight-color">+16.1%</h4>
+                    </a>
+                     <p class="supporting-text">2025年Q1乘用车产量同比增长。</p>
+                    <p class="english-subtitle">Q1 Passenger Car Output Growth</p>
+                     <span class="tooltip-text"></span> </div>
+
+            </div>
+        </section>
+
+        <section id="section-market" class="main-card card animate-on-scroll">
+             <h3 class="text-3xl font-bold mb-6 border-b border-gray-700 pb-3">
+                 <i class="fas fa-chart-bar mr-3 highlight-color"></i> 市场销量与动力类型分析 - Market Sales & Powertrain Analysis
+             </h3>
+
+             <div class="mb-8 card p-4 animate-on-scroll"> <h4 class="text-xl font-bold mb-4 text-gray-300">a) 中国乘用车市场销量趋势（2025年1-4月，单位：万辆）</h4>
+                 <div class="chart-container">
+                    <canvas id="chinaMonthlySalesChart"></canvas>
+                </div>
+                <p class="text-sm text-gray-500 mt-2">数据来源: 中汽协 CAAM, 乘联会 CPCA 等公开数据。</p>
+            </div>
+
+             <div class="mb-8 card p-4 animate-on-scroll">
+                 <h4 class="text-xl font-bold mb-4 text-gray-300">b) 主要厂商月度销量趋势（2025年1-4月，单位：万辆）</h4>
+                 <div class="chart-container">
+                    <canvas id="manufacturerSalesChart"></canvas>
+                </div>
+                 <p class="text-sm text-gray-500 mt-2">数据来源: 行业公开数据.</p>
+             </div>
+
+
+            <h4 class="text-xl font-bold mb-4 text-gray-300">c) 市场份额及变化趋势</h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="mini-card animate-on-scroll" data-detail="据MarkLines数据，2025年Q1中国新能源汽车渗透率41.2%，PHEV销量同比增46.1%，BEV同比增62.7%。">
+                    <a href="https://www.thepaper.cn/newsDetail_forward_30643089" target="_blank" class="block">
+                       <h4 class="big-element highlight-color">41.2%</h4>
+                    </a>
+                    <p class="supporting-text">2025年Q1中国新能源汽车渗透率。PHEV <span class="highlight-color">+46.1%</span>, BEV <span class="highlight-color">+62.7%</span>。</p>
+                    <p class="english-subtitle">Q1 China NEV Penetration</p>
+                     <span class="tooltip-text"></span> </div>
+
+                <div class="mini-card animate-on-scroll" data-detail="欧洲带启停燃油车销量占比约35%，同比增长4%；HEV市场份额提升至28%。">
+                    <h4 class="big-element highlight-color">欧洲HEV 28%</h4>
+                    <p class="supporting-text">欧洲HEV市场份额。启停燃油车占比约35%(+4%)。</p>
+                    <p class="english-subtitle">Europe HEV Share</p>
+                     <span class="tooltip-text"></span> </div>
+
+                 <div class="mini-card animate-on-scroll" data-detail="2025年中国新能源汽车渗透率持续提升，预计年内新能源销量将首次超越传统燃油车。">
+                    <a href="http://www.cada.cn/Trends/info_91_10244.html" target="_blank" class="block">
+                         <h4 class="big-element">超越燃油车</h4>
+                    </a>
+                    <p class="supporting-text">预计2025年中国新能源汽车年销量将<span class="highlight-color">首次超越</span>传统燃油车。</p>
+                    <p class="english-subtitle">NEV Sales Forecast 2025</p>
+                     <span class="tooltip-text"></span> </div>
+            </div>
+        </section>
+
+         <section id="section-12v-market" class="main-card card animate-on-scroll">
+             <h3 class="text-3xl font-bold mb-6 border-b border-gray-700 pb-3">
+                 <i class="fas fa-battery-full mr-3 highlight-color"></i> 12V汽车电池市场与技术趋势 - 12V Battery Market & Tech Trends
+             </h3>
+             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+
+                <div class="mini-card animate-on-scroll" data-detail="2024年全球12V电池市场规模达851.47亿元，中国市场占285.92亿元。">
+                    <a href="https://www.dirmarketresearch.com/reports/12v-automotive-lithium-battery-1854717785901195264" target="_blank" class="block">
+                        <h4 class="big-element highlight-color">中国285.92亿</h4>
+                    </a>
+                    <p class="supporting-text">2024年中国12V市场规模 (人民币)。全球规模851.47亿。</p>
+                     <p class="english-subtitle">China 12V Market Size</p>
+                     <span class="tooltip-text"></span> </div>
+
+                <div class="mini-card animate-on-scroll" data-detail="锂离子电池凭借2000次以上循环寿命及1000A瞬间启动电流优势加速替代铅酸电池。">
+                     <a href="https://www.dirmarketresearch.com/reports/12v-automotive-lithium-battery-1854717785901195264" target="_blank" class="block">
+                        <h4 class="big-element highlight-color">>2000次</h4>
+                    </a>
+                     <p class="supporting-text">锂电循环寿命。瞬间启动电流达1000A，加速替代铅酸。</p>
+                    <p class="english-subtitle">Li-ion Battery Cycles</p>
+                     <span class="tooltip-text"></span> </div>
+
+                <div class="mini-card animate-on-scroll" data-detail="宁德时代、比亚迪布局12V锂电产品，上汽集团部分车型试点应用，实现减重30%及支持高阶ADAS系统。">
+                     <a href="https://m.gelonghui.com/p/1736929" target="_blank" class="block">
+                        <h4 class="big-element">宁德时代 / 比亚迪</h4>
+                    </a>
+                    <p class="supporting-text">两大电池巨头布局12V锂电。上汽试点，<span class="highlight-color">减重30%</span>，支持ADAS。</p>
+                    <p class="english-subtitle">CATL / BYD in 12V Li-ion</p>
+                     <span class="tooltip-text"></span> </div>
+
+                <div class="mini-card animate-on-scroll" data-detail="长安UNI-V等车型采用锂离子12V电池，减重5kg，低温启动性能提升40%。">
+                    <h4 class="big-element highlight-color">减重5kg</h4>
+                    <p class="supporting-text">长安UNI-V采用锂电12V，减重。低温启动<span class="highlight-color">+40%</span>。</p>
+                    <p class="english-subtitle">Changan UNI-V Weight Reduction</p>
+                     <span class="tooltip-text"></span> </div>
+
+                <div class="mini-card animate-on-scroll" data-detail="主机厂关注轻量化（锂电能量密度180Wh/kg）、安全性（固态电解质技术）及成本控制（2025年成本降至铅酸电池1.5倍以内）。">
+                     <h4 class="big-element">主机厂关注</h4>
+                    <p class="supporting-text">关注轻量化(180Wh/kg), 安全性(固态), 成本(2025年降至铅酸1.5倍内)。</p>
+                    <p class="english-subtitle">OEM Focus Areas</p>
+                     <span class="tooltip-text"></span> </div>
+
+                <div class="mini-card animate-on-scroll" data-detail="亿纬锂能、国轩高科等动力电池企业拓展12V细分市场。华为数字能源推出集成式电源管理系统，推动智能座舱12V锂电应用。">
+                     <a href="https://auto.gasgoo.com/news/202504/28I70424125C501.shtml" target="_blank" class="block">
+                        <h4 class="big-element">亿纬 / 国轩 / 华为</h4>
+                    </a>
+                     <p class="supporting-text">电池企业拓展12V市场，华为推集成电源管理系统。</p>
+                    <p class="english-subtitle">Battery Cos/Huawei Expansion</p>
+                     <span class="tooltip-text"></span> </div>
+                 <div class="mini-card animate-on-scroll" data-detail="随着汽车智能化，车辆低压电气负载增大，这对12V电池的瞬时功率和循环寿命提出更高要求。">
+                    <h4 class="big-element">智能化负载</h4>
+                    <p class="supporting-text">智能化增加低压负载，需更高功率和循环寿命12V电池。</p>
+                    <p class="english-subtitle">Intelligent Vehicle Load</p>
+                     <span class="tooltip-text"></span> </div>
+             </div>
+         </section>
+
+        <section id="section-demand" class="main-card card animate-on-scroll">
+             <h3 class="text-3xl font-bold mb-6 border-b border-gray-700 pb-3">
+                 <i class="fas fa-car-side mr-3 highlight-color"></i> 终端市场需求与偏好 - End Market Demand & Preferences
+             </h3>
+             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                <div class="mini-card animate-on-scroll" data-detail="主机厂对12V电池技术规格升级，要求支持48V轻混系统、3kW放电功率、8年以上寿命及-40℃低温测试。吉利极氪001采用锂电12V电池，整车线束减少50%。">
+                    <a href="https://m.gelonghui.com/p/1736929" target="_blank" class="block">
+                         <h4 class="big-element">需求升级</h4>
+                     </a>
+                     <p class="supporting-text">主机厂要求支持48V轻混, 3kW放电, 8年以上寿命, -40℃低温。极氪001线束-50%.</p>
+                    <p class="english-subtitle">OEM Requirements Upgrade</p>
+                     <span class="tooltip-text"></span> </div>
+                 <div class="mini-card animate-on-scroll" data-detail="2024年锂电12V售后渗透率达12%。消费者偏好免维护及5年质保产品，锂电替换单价降至800-1200元，铅酸电池500-800元。">
+                     <a href="https://www.dirmarketresearch.com/reports/12v-automotive-lithium-battery-1854717785901195264" target="_blank" class="block">
+                         <h4 class="big-element highlight-color">售后12%</h4>
+                     </a>
+                    <p class="supporting-text">2024年锂电12V售后渗透率。消费者偏好免维护/5年质保。锂电价格800-1200元。</p>
+                    <p class="english-subtitle">Aftermarket Penetration</p>
+                     <span class="tooltip-text"></span> </div>
+            </div>
+        </section>
+
+        <section id="section-policies" class="main-card card animate-on-scroll">
+             <h3 class="text-3xl font-bold mb-6 border-b border-gray-700 pb-3">
+                 <i class="fas fa-balance-scale mr-3 highlight-color"></i> 政策法规与关键原材料 - Policies & Raw Materials
+             </h3>
+             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="mini-card animate-on-scroll" data-detail="2025年4月，工业和信息化部发布《电动汽车用动力蓄电池安全要求》（GB38031-2025）强制性国家标准，2026年7月1日起实施，新增底部撞击、快充循环安全测试等。">
+                     <a href="http://www.news.cn/politics/20250417/fb30c67b1692406abc31cb73e6fdb624/c.html" target="_blank" class="block">
+                         <h4 class="big-element highlight-color">GB38031</h4>
+                     </a>
+                     <p class="supporting-text">电动汽车动力电池安全新国标发布，2026年7月实施。</p>
+                     <p class="english-subtitle">New Battery Safety Std</p>
+                     <span class="tooltip-text"></span> </div>
+                <div class="mini-card animate-on-scroll" data-detail="2025年3月上海铅期货价格同比上涨18%，铅价波动对铅酸12V电池成本影响显著。环保部计划将铅蓄电池回收率提升至95%，推动铅蓄电池的规范回收和循环利用，间接支持锂电替代。">
+                    <h4 class="big-element highlight-color">+18%</h4>
+                     <p class="supporting-text">2025年3月上海铅期货价同比上涨。环保部拟提铅蓄电池回收率至<span class="highlight-color">95%</span>。</p>
+                    <p class="english-subtitle">Lead Price Increase (Mar)</p>
+                     <span class="tooltip-text"></span> </div>
+                 <div class="mini-card animate-on-scroll" data-detail="欧盟《新电池法》要求2030年车载电池碳足迹降低40%等，推动供应链本土化和绿色制造，影响有出口业务的中国12V电池企业。">
+                    <h4 class="big-element">欧盟电池法</h4>
+                    <p class="supporting-text">欧盟电池法对碳足迹、回收等要求，影响中国出口。</p>
+                    <p class="english-subtitle">EU Battery Law Impact</p>
+                     <span class="tooltip-text"></span> </div>
+            </div>
+        </section>
+
+        <section id="section-future" class="main-card card animate-on-scroll">
+             <h3 class="text-3xl font-bold mb-6 border-b border-gray-700 pb-3">
+                 <i class="fas fa-chart-line mr-3 highlight-color"></i> 未来6个月趋势分析判断 - Future Trend Analysis
+             </h3>
+             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="mini-card animate-on-scroll" data-detail="未来6个月趋势判断：12V锂电池在高端车型渗透率将突破20%（注：此为判断），主机厂加快48V/12V双电压平台研发。">
+                    <h4 class="big-element highlight-color">预计 >20%</h4>
+                    <p class="supporting-text">未来6个月，12V锂电高端车型渗透率预测。主机厂加快双电压平台研发。</p>
+                    <p class="english-subtitle">Li-ion Penetration Forecast</p>
+                     <span class="tooltip-text"></span> </div>
+                 <div class="mini-card animate-on-scroll" data-detail="铅酸电池依托回收体系仍占半数市场（注：指整个汽车12V电池市场或某种特定统计），锂电成本下降30%（注：指未来某个时间点可能的下降幅度）将加剧竞争。">
+                    <h4 class="big-element">铅酸 VS 锂电</h4>
+                    <p class="supporting-text">铅酸电池仍占半数市场，锂电成本下降将加剧竞争。</p>
+                    <p class="english-subtitle">Lead Acid vs Li-ion</p>
+                     <span class="tooltip-text"></span> </div>
+                 <div class="mini-card animate-on-scroll" data-detail="中国拟出台12V锂电安全标准，规范市场，提升质量。">
+                     <h4 class="big-element highlight-color">拟出台标准</h4>
+                    <p class="supporting-text">中国拟出台12V锂电安全标准，规范市场，提升质量。</p>
+                    <p class="english-subtitle">Upcoming Standard</p>
+                     <span class="tooltip-text"></span> </div>
+                 <div class="mini-card animate-on-scroll" data-detail="中国12V电池龙头企业海外建厂布局欧洲等，规避贸易壁垒，抢占配套及售后市场。">
+                     <h4 class="big-element">海外布局</h4>
+                    <p class="supporting-text">中国龙头企业海外建厂，规避贸易壁垒，抢占配套/售后市场。</p>
+                    <p class="english-subtitle">Overseas Expansion</p>
+                     <span class="tooltip-text"></span> </div>
+                 <div class="mini-card animate-on-scroll" data-detail="供应链多元化及原材料价格波动（特别是铅）成为企业风险管理重点。">
+                    <h4 class="big-element highlight-color">供应链风险</h4>
+                    <p class="supporting-text">供应链多元化及原材料价格波动成为企业风险管理重点。</p>
+                    <p class="english-subtitle">Supply Chain Risks</p>
+                     <span class="tooltip-text"></span> </div>
+            </div>
+        </section>
+
+
+        <section class="main-card card animate-on-scroll">
+             <h3 class="text-3xl font-bold mb-6 border-b border-gray-700 pb-3">
+                 <i class="fas fa-info-circle mr-3 highlight-color"></i> 信息来源与说明 - Sources & Notes
+            </h3>
+            <p class="text-gray-400 mb-4">
+                以上内容是基于您提供的文本信息进行整理和可视化。卡片标题旁或内部的链接（如果存在）指向您在原始文本该要点后提供的第一个来源链接。由于信息整合，部分卡片可能综合了来自不同来源或无明确单一来源的信息。
+            </p>
+             <p class="text-yellow-500 text-sm mb-4">
+                **请注意：** 本页面仅为信息可视化工具，无法保证所有引用链接的实时有效性和外部内容的完全一致性。未来趋势判断是基于当前信息的分析和预测，存在不确定性，仅供参考。请始终以权威报告和原始数据源为准。
+            </p>
+
+            <h4 class="text-xl font-bold mb-3 text-gray-300">原始参考来源链接列表 (由您提供):</h4>
+            <ul class="list-disc list-inside text-gray-400 text-sm grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <li><a href="https://www.dirmarketresearch.com/reports/12v-automotive-lithium-battery-1854717785901195264" target="_blank" class="underline hover:text-highlight-color">DirMarketResearch Report (Sample URL provided)</a></li>
+                <li><a href="https://finance.sina.com.cn/roll/2025-01-10/doc-ineenpiv5535806.shtml" target="_blank" class="underline hover:text-highlight-color">Sina Finance (SAIC Q1)</a></li>
+                <li><a href="https://m.gelonghui.com/p/1736929" target="_blank" class="underline hover:text-highlight-color">Gelonghui (Nio, 12V)</a></li>
+                <li><a href="https://www.sohu.com/a/889501772_121713417" target="_blank" class="underline hover:text-highlight-color">Sohu (Nio Tech)</a></li>
+                <li><a href="http://www.cada.cn/Trends/info_91_10244.html" target="_blank" class="underline hover:text-highlight-color">CADA (Mar NEV)</a></li>
+                <li><a href="http://www.caam.org.cn/chn/5/cate_39/con_5236697.html" target="_blank" class="underline hover:text-highlight-color">CAAM (Q1 PV)</a></li>
+                <li><a href="https://www.thepaper.cn/newsDetail_forward_30643089" target="_blank" class="underline hover:text-highlight-color">The Paper (NEV Penetration)</a></li>
+                 <li><a href="https://auto.gasgoo.com/news/202504/28I70424125C501.shtml" target="_blank" class="underline hover:text-highlight-color">Gasgoo Auto (Battery Players)</a></li>
+                 <li><a href="http://www.news.cn/politics/20250417/fb30c67b1692406abc31cb73e6fdb624/c.html" target="_blank" class="underline hover:text-highlight-color">Xinhua News (GB38031)</a></li>
+                 <li><a href="http://cpc.people.com.cn/n1/2025/0417/c64387-40461994.html" target="_blank" class="underline hover:text-highlight-color">People.cn (GB38031)</a></li>
+                 <li><a href="https://www.nio.cn/news" target="_blank" class="underline hover:text-highlight-color">Nio News (Mentioned in input, source for Lead price seems mismatched)</a></li>
+                <li><a href="https://finance.sina.com.cn/stock/relnews/cn/2025-05-09/doc-inevyhfu4259979.shtml" target="_blank" class="underline hover:text-highlight-color">Sina Finance (More Q1 Financials)</a></li>
+                 <li><a href="http://stcn.com/article/detail/1746769.html" target="_blank" class="underline hover:text-highlight-color">STCN (Benz, VW)</a></li>
+                 <li><a href="http://www.caam.org.cn/chn/5/cate_39/con_5236693.html" target="_blank" class="underline hover:text-highlight-color">CAAM (Mar NEV detail)</a></li>
+
+            </ul>
+        </section>
+
+
+        <footer class="text-center text-gray-500 text-sm mt-12 pb-8"> <p>&copy; 2025 Analysis Summary. All rights reserved.</p>
+            <p>免责声明: 本信息基于您提供的公开来源进行汇总，旨在提供快速市场概览。数据和未来趋势判断存在时效性和不确定性，请参考专业报告并核实来源。</p>
+        </footer>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
+    <script>
+        // Function to initialize Intersection Observer for fade-in animation
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.animate-on-scroll');
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.05 // Trigger when 5% of the element is visible
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        // Apply a staggered delay for mini-cards within a grid
+                        // Note: Index needs to be relative to the observable list, not the whole document
+                        // A better approach for staggering might be within the DOM structure or separate observers per grid
+                        // For simplicity here, we'll just add the visible class directly.
+                         entry.target.classList.add('is-visible');
+
+                         // Optional: unobserve after animation
+                         // observer.unobserve(entry.target);
+                    } else {
+                         // Optional: remove class when out of view to allow re-triggering
+                         // entry.target.classList.remove('is-visible');
+                    }
+                });
+            }, observerOptions);
+
+            // Observe each element with the animate-on-scroll class
+            elements.forEach(el => {
+                 observer.observe(el);
+            });
+        };
+
+        // Function to populate tooltip text from data-detail attribute
+        const populateTooltips = () => {
+            document.querySelectorAll('.mini-card[data-detail]').forEach(card => {
+                const detailText = card.dataset.detail;
+                const tooltipTextElement = card.querySelector('.tooltip-text'); // Find the tooltip text element inside the card
+
+                if (tooltipTextElement && detailText) {
+                    tooltipTextElement.textContent = detailText;
+                } else if (tooltipTextElement) {
+                    // If no data-detail but tooltip element exists, hide it or remove it
+                    tooltipTextElement.remove(); // Remove the tooltip element if no text
+                }
+            });
+        };
+
+
+        // Function to initialize the China Monthly Sales Chart
+        const initializeChinaMonthlySalesChart = () => {
+            try {
+                const ctx = document.getElementById('chinaMonthlySalesChart');
+                 if (!ctx) { console.error("Canvas 'chinaMonthlySalesChart' not found."); return; }
+                const salesData = {
+                    labels: ['2025年1月', '2025年2月', '2025年3月', '2025年4月'],
+                    datasets: [
+                        {
+                            label: 'ICE (万辆)',
+                            data: [120, 110, 130, 140],
+                            backgroundColor: '#555555', // Dark grey for ICE
+                            stack: 'Stack 0',
+                        },
+                        {
+                            label: 'HEV (万辆)',
+                            data: [30, 28, 32, 35],
+                            backgroundColor: '#888888', // Medium grey for HEV
+                            stack: 'Stack 0',
+                        },
+                         {
+                            label: 'PHEV (万辆)',
+                            data: [37, 38, 43, 44],
+                            backgroundColor: '#FF8C2B', // Highlight color for PHEV
+                            stack: 'Stack 0',
+                        },
+                        {
+                            label: 'BEV (万辆)',
+                            data: [57, 65, 80, 95],
+                            backgroundColor: '#FFAA00', // A slightly different warm tone for BEV
+                            stack: 'Stack 0',
+                        },
+                    ]
+                };
+
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: salesData,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                         plugins: {
+                            title: {
+                                display: false, // Title displayed in H4 above canvas
+                                text: '中国乘用车销量趋势 (2025年1-4月)',
+                                color: '#ffffff',
+                                font: { size: 18 }
+                            },
+                            legend: {
+                                labels: { color: '#cccccc' }
+                            },
+                             tooltip: { // Using Chart.js built-in tooltip
+                                 enabled: true,
+                                 mode: 'index',
+                                 intersect: false,
+                                 backgroundColor: 'rgba(0,0,0,0.8)',
+                                 titleColor: '#ffffff',
+                                 bodyColor: '#cccccc',
+                                 borderColor: '#555555',
+                                 borderWidth: 1,
+                                 cornerRadius: 4,
+                             }
+                        },
+                        scales: {
+                            x: {
+                                stacked: true,
+                                title: { display: true, text: '月份', color: '#cccccc' },
+                                ticks: { color: '#cccccc' },
+                                grid: { color: '#333333' }
+                            },
+                            y: {
+                                stacked: true,
+                                title: { display: true, text: '销量 (万辆)', color: '#cccccc' },
+                                 ticks: { color: '#cccccc' },
+                                grid: { color: '#333333' }
+                            }
+                        },
+                        animation: {
+                             duration: 1000, // Animation duration in milliseconds
+                             easing: 'easeOutQuart' // Easing function
+                        }
+                    }
+                });
+            } catch (error) {
+                console.error("Error initializing China Monthly Sales Chart:", error);
+                 // Display fallback message if chart fails
+                 const container = document.getElementById('chinaMonthlySalesChart').parentElement;
+                 if (container) {
+                      container.innerHTML = "<p class='text-red-500 text-center'>无法加载图表数据，请检查网络或浏览器兼容性。</p>";
+                 }
+            }
+        };
+
+         // Function to initialize the Manufacturer Sales Chart
+        const initializeManufacturerSalesChart = () => {
+             try {
+                const ctx = document.getElementById('manufacturerSalesChart');
+                if (!ctx) { console.error("Canvas 'manufacturerSalesChart' not found."); return; }
+                const salesData = {
+                    labels: ['2025年1月', '2025年2月', '2025年3月', '2025年4月'],
+                    datasets: [
+                        {
+                            label: '比亚迪 (万辆)',
+                            data: [92, 95, 110, 120],
+                            borderColor: '#FF8C2B', // Highlight color
+                            backgroundColor: 'rgba(255, 140, 43, 0.2)',
+                            fill: true,
+                            tension: 0.3, // Add some curve
+                            pointBackgroundColor: '#FF8C2B',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: '#FF8C2B',
+                        },
+                        {
+                            label: '特斯拉 (万辆)',
+                            data: [63, 58, 70, 75],
+                             borderColor: '#CC0000', // Red variant
+                            backgroundColor: 'rgba(204, 0, 0, 0.2)',
+                            fill: true,
+                            tension: 0.3,
+                             pointBackgroundColor: '#CC0000',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: '#CC0000',
+                        },
+                        {
+                            label: '小鹏 (万辆)',
+                            data: [35, 38, 45, 50],
+                            borderColor: '#1E90FF', // DodgerBlue
+                            backgroundColor: 'rgba(30, 144, 255, 0.2)',
+                            fill: true,
+                            tension: 0.3,
+                             pointBackgroundColor: '#1E90FF',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: '#1E90FF',
+                        },
+                         {
+                            label: '理想 (万辆)',
+                            data: [40, 42, 48, 55],
+                            borderColor: '#32CD32', // LimeGreen
+                            backgroundColor: 'rgba(50, 205, 50, 0.2)',
+                            fill: true,
+                            tension: 0.3,
+                             pointBackgroundColor: '#32CD32',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: '#32CD32',
+                        },
+                        {
+                            label: '零跑 (万辆)',
+                            data: [20, 22, 25, 28],
+                            borderColor: '#BA55D3', // MediumOrchid
+                            backgroundColor: 'rgba(186, 85, 211, 0.2)',
+                            fill: true,
+                            tension: 0.3,
+                             pointBackgroundColor: '#BA55D3',
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: '#BA55D3',
+                        }
+                    ]
+                };
+
+                new Chart(ctx, {
+                    type: 'line',
+                    data: salesData,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: {
+                                display: false, // Title displayed in H4 above canvas
+                                text: '主要厂商月度销量趋势 (2025年1-4月)',
+                                color: '#ffffff',
+                                font: { size: 18 }
+                            },
+                            legend: {
+                                labels: { color: '#cccccc' }
+                            },
+                             tooltip: { // Using Chart.js built-in tooltip
+                                 enabled: true,
+                                 mode: 'index',
+                                 intersect: false,
+                                 backgroundColor: 'rgba(0,0,0,0.8)',
+                                 titleColor: '#ffffff',
+                                 bodyColor: '#cccccc',
+                                 borderColor: '#555555',
+                                 borderWidth: 1,
+                                 cornerRadius: 4,
+                             }
+                        },
+                        scales: {
+                            x: {
+                                title: { display: true, text: '月份', color: '#cccccc' },
+                                ticks: { color: '#cccccc' },
+                                grid: { color: '#333333' }
+                            },
+                            y: {
+                                beginAtZero: true,
+                                title: { display: true, text: '销量 (万辆)', color: '#cccccc' },
+                                 ticks: { color: '#cccccc' },
+                                grid: { color: '#333333' }
+                            }
+                        },
+                        animation: {
+                             duration: 1000,
+                             easing: 'easeOutQuart'
+                        }
+                    }
+                });
+             } catch (error) {
+                console.error("Error initializing Manufacturer Sales Chart:", error);
+                 // Display fallback message if chart fails
+                 const container = document.getElementById('manufacturerSalesChart').parentElement;
+                 if (container) {
+                      container.innerHTML = "<p class='text-red-500 text-center'>无法加载图表数据，请检查网络或浏览器兼容性。</p>";
+                 }
+            }
+        };
+
+        // Function to initialize Chart 3: 12V Li-ion Aftermarket Penetration
+         const initializeAftermarketPenetrationChart = () => {
+              try {
+                const ctx = document.getElementById('aftermarketPenetrationChart');
+                if (!ctx) { console.error("Canvas 'aftermarketPenetrationChart' not found."); return; }
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['2023年', '2024年'],
+                        datasets: [{
+                            label: '锂电12V售后渗透率 (%)',
+                            data: [5, 12],
+                            backgroundColor: ['rgba(255, 140, 43, 0.5)', 'rgba(255, 140, 43, 0.8)'], // Highlighting the growth
+                            borderColor: ['#FF8C2B', '#FF8C2B'],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 15, // Set max for better visual comparison of growth
+                                grid: { color: '#333333' },
+                                ticks: { color: '#cccccc', callback: function(value) { return value + '%' } }
+                            },
+                            x: {
+                                grid: { display: false },
+                                ticks: { color: '#cccccc' }
+                            }
+                        },
+                        plugins: {
+                            title: { display: true, text: '锂电12V售后市场渗透率变化', color: '#ffffff', font: {size: 16} },
+                            legend: { display: false },
+                            tooltip: { // Using Chart.js built-in tooltip
+                                 enabled: true,
+                                 mode: 'index',
+                                 intersect: false,
+                                 backgroundColor: 'rgba(0,0,0,0.8)',
+                                 titleColor: '#ffffff',
+                                 bodyColor: '#cccccc',
+                                 borderColor: '#555555',
+                                 borderWidth: 1,
+                                 cornerRadius: 4,
+                             }
+                        }
+                    }
+                });
+              } catch (error) {
+                 console.error("Error initializing Aftermarket Penetration Chart:", error);
+                 const container = document.getElementById('aftermarketPenetrationChart').parentElement;
+                 if (container) {
+                      container.innerHTML = "<p class='text-red-500 text-center'>无法加载图表数据，请检查网络或浏览器兼容性。</p>";
+                 }
+              }
+         };
+
+
+        // Function to initialize Chart 4: Global 12V Battery Market Size
+         const initializeMarketSizeChart = () => {
+              try {
+                 const ctx = document.getElementById('marketSizeChart');
+                 if (!ctx) { console.error("Canvas 'marketSizeChart' not found."); return; }
+                 new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['中国市场 (¥285.92亿)', '全球其他市场 (¥565.55亿)'],
+                        datasets: [{
+                            label: '2024年12V电池市场规模',
+                            data: [285.92, 851.47 - 285.92], // Global total - China = Rest of World
+                            backgroundColor: ['#FF8C2B', '#555555'], // Highlight China, grey for rest
+                            borderColor: ['#FFFFFF', '#FFFFFF'], // White border for contrast
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: { display: true, text: '2024年全球12V电池市场规模分布', color: '#ffffff', font: {size: 16} },
+                            legend: { labels: { color: '#cccccc' } },
+                             tooltip: { // Using Chart.js built-in tooltip
+                                 enabled: true,
+                                 backgroundColor: 'rgba(0,0,0,0.8)',
+                                 titleColor: '#ffffff',
+                                 bodyColor: '#cccccc',
+                                 borderColor: '#555555',
+                                 borderWidth: 1,
+                                 cornerRadius: 4,
+                                 callbacks: {
+                                      label: function(context) {
+                                          let label = context.label || '';
+                                          if (label) {
+                                              label += ': ';
+                                          }
+                                          if (context.parsed !== null) {
+                                              // Display value with currency and unit
+                                              label += '¥' + context.parsed + '亿';
+                                          }
+                                          return label;
+                                      }
+                                 }
+                             }
+                        }
+                    }
+                });
+              } catch (error) {
+                 console.error("Error initializing Market Size Chart:", error);
+                 const container = document.getElementById('marketSizeChart').parentElement;
+                 if (container) {
+                      container.innerHTML = "<p class='text-red-500 text-center'>无法加载图表数据，请检查网络或浏览器兼容性。</p>";
+                 }
+              }
+         };
+
+
+        // Initialize functions when the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            // Wait a moment before animating to ensure elements are rendered
+            setTimeout(() => {
+                animateOnScroll(); // Start fade-in animations
+            }, 100); // Small delay
+
+             // Populate tooltip text based on data-detail
+            populateTooltips(); // This must run AFTER the DOM elements are created
+
+            // Initialize charts after a slight delay to ensure canvas is ready
+            setTimeout(() => {
+                 // Initialize all charts
+                initializeChinaMonthlySalesChart();
+                initializeManufacturerSalesChart();
+                initializeAftermarketPenetrationChart();
+                initializeMarketSizeChart();
+
+            }, 200); // Slightly longer delay for charts
+
+             // Note: setupHoverPopup function is removed as we are using CSS :hover for tooltip visibility
+             // and JS only for populating the text content on DOMContentLoaded.
+
+        });
+
+    </script>
+
+</body>
+</html>
